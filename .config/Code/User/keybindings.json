@@ -1,10 +1,5 @@
-// Place your key bindings in this file to override the defaultsauto[]
 [
-    // Terminal
-    {
-        "key": "ctrl+p",
-        "command": "workbench.action.quickOpen"
-    },
+    // Terminal Shortcuts
     {
         "key": "ctrl+shift+a",
         "command": "workbench.action.terminal.focusNext",
@@ -21,23 +16,18 @@
     },
     {
         "key": "ctrl+shift+n",
-        "command": "workbench.action.terminal.new",
-        "when": "terminalFocus"
+        "command": "workbench.action.terminal.new"
     },
     {
         "key": "ctrl+shift+w",
         "command": "workbench.action.terminal.kill",
         "when": "terminalFocus"
     },
-    // FILE TREE
+
+    // File Explorer Shortcuts
     {
-        "command": "workbench.action.toggleSidebarVisibility",
-        "key": "ctrl+e"
-    },
-    {
-        "command": "workbench.files.action.focusFilesExplorer",
-        "key": "ctrl+e",
-        "when": "editorTextFocus"
+        "key": "ctrl+b",
+        "command": "workbench.action.toggleSidebarVisibility"
     },
     {
         "key": "n",
@@ -45,8 +35,8 @@
         "when": "filesExplorerFocus && !inputFocus"
     },
     {
-        "command": "renameFile",
         "key": "r",
+        "command": "renameFile",
         "when": "filesExplorerFocus && !inputFocus"
     },
     {
@@ -55,8 +45,8 @@
         "when": "explorerViewletFocus"
     },
     {
-        "command": "deleteFile",
         "key": "d",
+        "command": "deleteFile",
         "when": "filesExplorerFocus && !inputFocus"
-    },
+    }
 ]

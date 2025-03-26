@@ -1,173 +1,50 @@
 {
-  "cSpell.userWords": ["beezlabs", "jeeva", "msal", "referer", "sqlalchemy"],
-  "git.autofetch": true,
-  "window.titleBarStyle": "custom",
-  "workbench.iconTheme": "material-icon-theme",
-  "workbench.startupEditor": "none",
-  "liveshare.guestApprovalRequired": true,
-  "liveshare.allowGuestDebugControl": true,
-  "liveshare.allowGuestTaskControl": true,
-  "liveshare.diagnosticLogging": true,
-  "liveshare.diagnosticMode": true,
-  "liveshare.notebooks.allowGuestExecuteCells": true,
-  "liveshare.publishWorkspaceInfo": true,
-  "redhat.telemetry.enabled": true,
-  "git.enableSmartCommit": true,
-  "python.defaultInterpreterPath": "/home/jeeva/Development/beezlabs/temp/.venv",
-  "breadcrumbs.enabled": false,
-  "editor.fontSize": 15,
-  "terminal.integrated.defaultProfile.windows": "PowerShell",
-  "editor.minimap.enabled": false,
-  "[html]": {
-    "editor.defaultFormatter": "vscode.html-language-features"
-  },
-  "terminal.integrated.env.windows": {
-    "PYTHONPATH": "${workspaceFolder}"
-  },
-  "Notes.notesLocation": "/home/jeeva/Documents/vsnotes",
-  // "vim.disableExtension": true,
-  "vim.leader": "<Space>",
-  "vim.foldfix": true,
-  "vim.hlsearch": true,
-  // "vim.startInInsertMode": true,
-  // File: settings.json
-  // File: settings.json
-  "vim.normalModeKeyBindingsNonRecursive": [
-    // NAVIGATION
-    // switch b/w buffers
-    {
-      "before": ["<S-h>"],
-      "commands": [":bprevious"]
-    },
-    {
-      "before": ["<S-l>"],
-      "commands": [":bnext"]
-    },
-    // splits
-    {
-      "before": ["leader", "v"],
-      "commands": [":vsplit"]
-    },
-    {
-      "before": ["leader", "s"],
-      "commands": [":split"]
-    },
-    // panes
-    {
-      "before": ["leader", "h"],
-      "commands": ["workbench.action.focusLeftGroup"]
-    },
-    {
-      "before": ["leader", "j"],
-      "commands": ["workbench.action.focusBelowGroup"]
-    },
-    {
-      "before": ["leader", "k"],
-      "commands": ["workbench.action.focusAboveGroup"]
-    },
-    {
-      "before": ["leader", "l"],
-      "commands": ["workbench.action.focusRightGroup"]
-    },
-    // NICE TO HAVE
-    {
-      "before": ["leader", "w"],
-      "commands": [":w!"]
-    },
-    {
-      "before": ["leader", "q"],
-      "commands": [":q!"]
-    },
-    {
-      "before": ["leader", "x"],
-      "commands": [":x!"]
-    },
-    {
-      "before": ["[", "d"],
-      "commands": ["editor.action.marker.prev"]
-    },
-    {
-      "before": ["]", "d"],
-      "commands": ["editor.action.marker.next"]
-    },
-    {
-      "before": ["<leader>", "c", "a"],
-      "commands": ["editor.action.quickFix"]
-    },
-    {
-      "before": ["leader", "f"],
-      "commands": ["workbench.action.quickOpen"]
-    },
-    {
-      "before": ["leader", "p"],
-      "commands": ["editor.action.formatDocument"]
-    },
-    {
-      "before": ["g", "h"],
-      "commands": ["editor.action.showDefinitionPreviewHover"]
+    "editor.fontSize": 16,
+    "editor.lineNumbers": "relative",
+    "editor.minimap.enabled": false,
+    "workbench.startupEditor": "none",
+    "workbench.sideBar.location": "right",
+    "workbench.activityBar.location": "top",
+    "git.autofetch": true,
+    "git.enableSmartCommit": true,
+    "window.titleBarStyle": "custom",
+    "window.customTitleBarVisibility": "auto",
+    "files.autoSave": "onFocusChange",
+    "security.workspace.trust.untrustedFiles": "open",
+    "cSpell.userWords": [
+        "jeeva",
+        "msal",
+        "sqlalchemy"
+    ],
+    
+    // Vim Settings
+    "vim.leader": "<Space>",
+    "vim.foldfix": true,
+    "vim.hlsearch": true,
+
+    "vim.normalModeKeyBindings": [
+        {
+            "before": ["<C-a>"],
+            "after": ["g", "g", "V", "G"]
+        }
+    ],
+
+    "vim.visualModeKeyBindings": [
+        {
+            "before": ["<"],
+            "commands": ["editor.action.outdentLines"]
+        },
+        {
+            "before": [">"],
+            "commands": ["editor.action.indentLines"]
+        }
+    ],
+
+    "vim.handleKeys": {
+        "<C-p>": false,
+        "<C-z>": false,
+        "<C-y>": false,
+        "<C-x>": false,
+        "<C-b>": false
     }
-  ],
-  "vim.visualModeKeyBindings": [
-    // Stay in visual mode while indenting
-    {
-      "before": ["<"],
-      "commands": ["editor.action.outdentLines"]
-    },
-    {
-      "before": [">"],
-      "commands": ["editor.action.indentLines"]
-    },
-    // Move selected lines while staying in visual mode
-    {
-      "before": ["J"],
-      "commands": ["editor.action.moveLinesDownAction"]
-    },
-    {
-      "before": ["K"],
-      "commands": ["editor.action.moveLinesUpAction"]
-    },
-    // toggle comment selection
-    {
-      "before": ["leader", "c"],
-      "commands": ["editor.action.commentLine"]
-    }
-  ],
-  "liveshare.accessibility.voiceEnabled": false,
-  "editor.fontFamily": "'Droid Sans Mono', 'monospace', monospace",
-  "files.autoSave": "onFocusChange",
-  "[python]": {
-    "editor.defaultFormatter": "ms-python.autopep8"
-  },
-  "python.analysis.inlayHints.functionReturnTypes": true,
-  "python.terminal.activateEnvInCurrentTerminal": true,
-  "python.analysis.autoFormatStrings": true,
-  "editor.formatOnSave": true,
-  "githubIssues.queries": [
-    {
-      "label": "My Issues",
-      "query": "is:open assignee:${user} repo:${owner}/${repository}",
-      "groupBy": ["milestone"]
-    },
-    {
-      "label": "Created Issues",
-      "query": "author:${user} state:open repo:${owner}/${repository} sort:created-desc"
-    },
-    {
-      "label": "Recent Issues",
-      "query": "state:open repo:${owner}/${repository} sort:updated-desc"
-    }
-  ],
-  "security.workspace.trust.untrustedFiles": "open",
-  "window.customTitleBarVisibility": "auto",
-  "workbench.sideBar.location": "right",
-  "python.experiments.optInto": [],
-  "githubPullRequests.pullBranch": "never",
-  "dart.flutterSdkPath": "/home/jeeva/Downloads/flutter",
-  "dev.containers.mountWaylandSocket": false,
-  "extensions.experimental.affinity": {
-    "asvetliakov.vscode-neovim": 1
-  },
-  "[jsonc]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
-  }
 }
