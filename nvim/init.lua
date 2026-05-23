@@ -58,6 +58,22 @@ if pylsp_cmd then
         cmd = { pylsp_cmd },
         filetypes = { "python" },
         root_markers = { "pyproject.toml", "setup.py", "setup.cfg", "requirements.txt", ".git" },
+        settings = {
+            pylsp = {
+                plugins = {
+                    -- Disable heavy plugins that slow down responsiveness
+                    pylint = { enabled = false },
+                    rope_completion = { enabled = false },
+                    yapf = { enabled = false },
+                    -- Optimize the Jedi completion engine
+                    jedi_completion = { 
+                        enabled = true, 
+                        fuzzy = false, -- Turning off fuzzy search speeds up exact dot-matching
+                        include_params = true, 
+                    },
+                }
+            }
+        }
     })
     vim.lsp.enable("pylsp")
 else
