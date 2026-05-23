@@ -126,3 +126,16 @@ vim.keymap.set("i", "[", "[]<Left>")
 -- You will likely want these for Python strings too:
 vim.keymap.set("i", "\"", "\"\"<Left>")
 vim.keymap.set("i", "'", "''<Left>")
+
+
+-- ============ Diagnostics Keymaps ============
+-- Show warning/error on the current line in a floating window
+vim.keymap.set("n", "gl", vim.diagnostic.open_float, { desc = "Show line diagnostics" })
+
+-- Jump to the previous or next warning/error
+vim.keymap.set("n", "[d", vim.diagnostic.goto_prev, { desc = "Previous diagnostic" })
+vim.keymap.set("n", "]d", vim.diagnostic.goto_next, { desc = "Next diagnostic" })
+
+
+-- ============ Theme ============
+vim.cmd("colorscheme habamax") -- or retrobox
