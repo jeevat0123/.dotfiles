@@ -139,3 +139,46 @@ vim.keymap.set("n", "]d", vim.diagnostic.goto_next, { desc = "Next diagnostic" }
 
 -- ============ Theme ============
 vim.cmd("colorscheme habamax") -- or retrobox
+
+
+-- ============ Native Snippets (No Plugins) ============
+-- Define your custom Python snippets here
+local python_snippets = {
+    -- $1 is the first stop, $2 is the second, $0 is where the cursor ends up last.
+    ["def"] = "def ${1:name}(${2:args}):\n    ${3:pass}",
+    ["class"] = "class ${1:ClassName}:\n    def __init__(self, ${2:args}):\n        ${3:pass}",
+    ["ifmain"] = "if __name__ == \"__main__\":\n    ${1:main()}"
+}
+vim.keymap.set({ "i", "s" }, "<Tab>", function()
+    -- 1. If we are already inside a snippet, jump forward to the next placeholder
+    if vim.snippet.active({ direction = 1 }) then
+        vim.snippet.jump(1)
+        return
+    end
+
+    -- 2. Get the word right before the cursor
+    local col = vim.api.nvim_win_get_cursor(0)[2]
+    local line = vim.api.nvim_get_current_line()
+    local word = line:sub(1, col):match("%w+$")
+
+    -- 3. If the word matches our snippet dictionary, expand it
+    if vim.bo.filetype == "python" and word and python_snippets[word] then
+        -- Delete the trigger word (e.g., "def")
+        local row = vim.api.nvim_win_get_cursor(0)[1] - 1
+        vim.api.nvim_buf_set_text(0, row, col - #word, row, col, {})
+        
+        -- Expand the snippet
+        vim.snippet.expand(python_snippets[word])
+        return
+    end
+
+    -- 4. Otherwise, behave like a normal Tab key
+    vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("<Tab>", true, false, true), "n", true)
+end, { silent = true, desc = "Snippet expand or jump forward" })
+
+-- Use Shift+Tab to jump backward through the snippet
+vim.keymap.set({ "i", "s" }, "<S-Tab>", function()
+    if vim.snippet.active({ direction = -1 }) then
+        vim.snippet.jump(-1)
+    end
+end, { silent = true, desc = "Snippet jump backward" })
