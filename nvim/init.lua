@@ -16,6 +16,12 @@ vim.cmd("syntax enable")
 
 -- ============ LSP Setup (native) ============
 local function resolve_pylsp_cmd()
+    -- OS detection
+    local is_windows = vim.fn.has("win32") == 1
+    local bin_dir = is_windows and "Scripts" or "bin"
+    local exe_ext = is_windows and ".exe" or ""
+    local pylsp_bin = "pylsp" .. exe_ext
+
     local root_markers = { "pyproject.toml", "setup.py", "setup.cfg", "requirements.txt", ".git" }
     local root_file = vim.fs.find(root_markers, {
         path = vim.fn.getcwd(),
@@ -26,13 +32,13 @@ local function resolve_pylsp_cmd()
 
     local virtual_env = vim.env.VIRTUAL_ENV
     if virtual_env and virtual_env ~= "" then
-        table.insert(candidate_paths, virtual_env .. "/Scripts/pylsp.exe")
+        table.insert(candidate_paths, virtual_env .. "/" .. bin_dir .. "/" .. pylsp_bin)
     end
 
     if root_file then
         local project_root = vim.fs.dirname(root_file)
         for _, venv_name in ipairs({ ".venv", "venv" }) do
-            table.insert(candidate_paths, project_root .. "/" .. venv_name .. "/Scripts/pylsp.exe")
+            table.insert(candidate_paths, project_root .. "/" .. venv_name .. "/" .. bin_dir .. "/" .. pylsp_bin)
         end
     end
 
@@ -42,11 +48,10 @@ local function resolve_pylsp_cmd()
         end
     end
 
-    for _, cmd_name in ipairs({ "pylsp.exe", "pylsp" }) do
-        local cmd_path = vim.fn.exepath(cmd_name)
-        if cmd_path ~= "" then
-            return cmd_path
-        end
+    -- Fallback to system path
+    local cmd_path = vim.fn.exepath("pylsp")
+    if cmd_path ~= "" then
+        return cmd_path
     end
 
     return nil
@@ -58,22 +63,6 @@ if pylsp_cmd then
         cmd = { pylsp_cmd },
         filetypes = { "python" },
         root_markers = { "pyproject.toml", "setup.py", "setup.cfg", "requirements.txt", ".git" },
-        settings = {
-            pylsp = {
-                plugins = {
-                    -- Disable heavy plugins that slow down responsiveness
-                    pylint = { enabled = false },
-                    rope_completion = { enabled = false },
-                    yapf = { enabled = false },
-                    -- Optimize the Jedi completion engine
-                    jedi_completion = { 
-                        enabled = true, 
-                        fuzzy = false, -- Turning off fuzzy search speeds up exact dot-matching
-                        include_params = true, 
-                    },
-                }
-            }
-        }
     })
     vim.lsp.enable("pylsp")
 else
