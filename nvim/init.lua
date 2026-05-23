@@ -182,3 +182,7 @@ vim.keymap.set({ "i", "s" }, "<S-Tab>", function()
         vim.snippet.jump(-1)
     end
 end, { silent = true, desc = "Snippet jump backward" })
+
+
+-- ============ Cross-Platform Clipboard ============
+vim.opt.clipboard = "unnamedplus"
