@@ -116,3 +116,13 @@ vim.api.nvim_create_autocmd("FileType", {
         end, vim.tbl_extend("force", opts, { desc = "Run tests in current file" }))
     end,
 })
+
+
+-- ============ Auto-close Brackets ============
+vim.keymap.set("i", "(", "()<Left>")
+vim.keymap.set("i", "{", "{}<Left>")
+vim.keymap.set("i", "[", "[]<Left>")
+
+-- You will likely want these for Python strings too:
+vim.keymap.set("i", "\"", "\"\"<Left>")
+vim.keymap.set("i", "'", "''<Left>")
