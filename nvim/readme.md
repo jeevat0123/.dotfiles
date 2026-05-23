@@ -1,146 +1,479 @@
-# Minimalist Native Neovim Config (Python Edition)
+# Minimal Native Neovim Config (Python Edition)
 
-A lightweight, 100% plugin-free Neovim configuration tailored specifically for Python development. This setup leverages Neovim 0.10+'s powerful built-in features to provide a modern IDE experience without the bloat of third-party package managers.
+A lightweight, blazing-fast, 100% plugin-free Neovim configuration built specifically for Python development using only native features from :contentReference[oaicite:0]{index=0}.
 
-Fully cross-platform: seamlessly works on both **Linux** and **Windows**.
+This setup provides a modern IDE experience without plugin managers, dependency conflicts, or startup bloat.
 
----
-
-## ✨ Features
-
-- **Zero Plugins:** Blazing fast startup time and zero dependency hell.
-- **Native LSP Integration:** Automatically detects local Python virtual environments (`.venv` or `venv`) on both Windows (`Scripts/`) and Linux (`bin/`).
-- **Native Snippet Engine:** Expand and jump through Python boilerplate (`def`, `class`, `ifmain`) using just the `<Tab>` key.
-- **Integrated Test/Run Runner:** Execute your Python scripts or run `pytest` in a bottom-split terminal without leaving the editor.
-- **Auto-closing Pairs:** Instantly closes brackets and quotes, keeping your cursor exactly where it needs to be.
-- **Cross-Platform Clipboard:** Seamlessly copy/paste between Neovim and your browser/OS using the `unnamedplus` register.
+Fully cross-platform:
+- Linux
+- Windows
 
 ---
 
-## ⚙️ Prerequisites
+# ✨ Features
 
-To get the most out of this configuration, ensure you have the following installed:
+## ⚡ Zero Plugins
+- No lazy.nvim
+- No packer.nvim
+- No Mason
+- No dependency hell
+- Instant startup
 
-### 1. Neovim >= 0.10
+Uses only Neovim's native APIs.
 
-Required for native snippets and the `habamax` / `retrobox` themes.
+---
 
-### 2. Python LSP Server
+## 🧠 Native LSP Support
+Automatic Python LSP setup using:
 
-Install this in your project's virtual environment or globally:
+- `python-lsp-server`
+- local `.venv`
+- active `VIRTUAL_ENV`
+- global fallback
+
+Supports:
+- autocomplete
+- hover docs
+- go-to-definition
+- references
+- rename
+- diagnostics
+- formatting
+- inlay hints
+
+---
+
+## 🔥 Native Autocomplete
+Powered entirely by native Neovim completion.
+
+Features:
+- automatic popup suggestions
+- fuzzy completion
+- import suggestions
+- method suggestions
+- completion confirmation
+- `<Tab>` navigation
+- `<S-Tab>` reverse navigation
+
+Example:
+
+```python
+from loguru import logger
+
+logger.info()
+```
+
+Autocomplete suggestions appear automatically.
+
+---
+
+## ✂️ Native Snippet Engine
+Uses Neovim 0.12 built-in snippets.
+
+Built-in snippets:
+
+| Trigger | Expands To |
+|---|---|
+| `def` | Python function |
+| `class` | Python class |
+| `ifmain` | Main entry block |
+
+Example:
+
+```python
+def<Tab>
+```
+
+expands into:
+
+```python
+def name(args):
+    pass
+```
+
+---
+
+## 🎨 Smart Auto-Pairs
+Automatic closing for:
+
+- `()`
+- `{}`
+- `[]`
+- `""`
+- `''`
+
+Cursor placement is handled automatically.
+
+---
+
+## 🚀 Integrated Python Runner
+Run Python files directly inside Neovim.
+
+Features:
+- reusable terminal
+- split terminal runner
+- pytest integration
+
+---
+
+## 🧪 Integrated Pytest Support
+
+Run:
+- current file tests
+- all project tests
+
+without leaving Neovim.
+
+---
+
+## 🧹 Auto Formatting
+Automatic formatting on save using:
+
+- `black`
+- `isort`
+
+---
+
+## ⚠️ Native Diagnostics
+Features:
+- inline diagnostics
+- floating error popups
+- warning navigation
+- severity sorting
+
+---
+
+## 📋 System Clipboard Support
+Uses system clipboard automatically.
+
+Works on:
+- Linux
+- Windows
+
+---
+
+# ⚙️ Requirements
+
+## Required
+
+### 1. Neovim
+
+Version:
+
+```bash
+nvim --version
+```
+
+Requires:
+
+```text
+Neovim >= 0.12
+```
+
+---
+
+### 2. Python
+
+Install Python 3.10+.
+
+---
+
+### 3. Python LSP + Tools
+
+Install:
 
 ```bash
 pip install "python-lsp-server[all]"
+pip install python-lsp-ruff
+pip install pylsp-mypy
+pip install black
+pip install isort
+pip install pytest
+pip install rope
+pip install jedi
 ```
-if pip is not showing due to pevn use this command
-```pyenv global 3.13.12```
 
-### 3. Clipboard Utility (Linux Only)
+---
 
-#### X11
+# 📋 Linux Clipboard Setup
+
+## X11
 
 ```bash
 sudo apt install xclip
 ```
 
-or
-
-```bash
-sudo apt install xsel
-```
-
-#### Wayland
+## Wayland
 
 ```bash
 sudo apt install wl-clipboard
 ```
 
-> Windows handles clipboard integration natively.
+Windows works automatically.
 
 ---
 
-## 🚀 Installation
+# 🚀 Installation
 
-Simply copy the `init.lua` file into your Neovim configuration directory.
+## Linux
 
-### Linux
+Config location:
 
 ```bash
 ~/.config/nvim/init.lua
 ```
 
-### Windows
+---
 
-```powershell
+## Windows
+
+Config location:
+
+```text
 ~/AppData/Local/nvim/init.lua
 ```
 
 ---
 
-## ⌨️ Keybindings Cheat Sheet
+## Copy Config
 
-### Leader Key
+Copy the provided `init.lua` into your Neovim config directory.
+
+---
+
+# ⌨️ Keybindings
+
+Leader key:
 
 ```text
-<Space>
+Space
 ```
 
 ---
 
-## 🐍 Python Execution & Testing
+# 🧠 LSP Navigation
 
-| Keymap      | Action      | Description                                                  |
-| ------------ | ------------ | ------------------------------------------------------------ |
-| `<leader>rr` | Run Script   | Executes the current Python file in a split terminal.        |
-| `<leader>tf` | Test File    | Runs `pytest` on the current file.                           |
-| `<leader>ta` | Test All     | Runs `pytest` on the entire project.                         |
-
----
-
-## 🧠 LSP & Code Navigation
-
-| Keymap       | Action               | Description                                                  |
-| ------------- | -------------------- | ------------------------------------------------------------ |
-| `gd`          | Go to Definition     | Jumps to where a function/class is defined.                  |
-| `gD`          | Go to Declaration    | Jumps to the declaration.                                    |
-| `gr`          | Find References      | Lists all places where the item under the cursor is used.    |
-| `K`           | Hover Documentation  | Shows the docstring/type info for the item under the cursor. |
-| `<leader>rn` | Rename               | Renames the variable/function across the file.               |
-| `<leader>ca` | Code Action          | Shows available quick-fixes or refactors.                    |
+| Keymap | Action |
+|---|---|
+| `gd` | Go to definition |
+| `gD` | Go to declaration |
+| `gr` | Find references |
+| `gi` | Go to implementation |
+| `K` | Hover documentation |
 
 ---
 
-## 🚨 Diagnostics (Errors & Warnings)
+# ✏️ Code Actions
 
-| Keymap | Action                  | Description                                                  |
-| ------- | ----------------------- | ------------------------------------------------------------ |
-| `gl`    | Show Line Diagnostics   | Opens a floating window explaining the error/warning.        |
-| `[d`    | Previous Diagnostic     | Jumps to the previous error/warning.                         |
-| `]d`    | Next Diagnostic         | Jumps to the next error/warning.                             |
-
----
-
-## ✂️ Snippets
-
-| Keymap               | Action        | Description                                                  |
-| -------------------- | ------------- | ------------------------------------------------------------ |
-| `def + <Tab>`        | Function      | Expands to a standard Python function layout.                |
-| `class + <Tab>`      | Class         | Expands to a standard class with an `__init__` method.       |
-| `ifmain + <Tab>`     | Main Guard    | Expands to `if __name__ == "__main__":`                      |
-| `<Tab>`              | Jump Forward  | Moves cursor to the next variable in the snippet.            |
-| `<S-Tab>`            | Jump Backward | Moves cursor to the previous variable in the snippet.        |
+| Keymap | Action |
+|---|---|
+| `<leader>rn` | Rename symbol |
+| `<leader>ca` | Code actions |
+| `<leader>fm` | Format file |
 
 ---
 
-## 🎨 Theming
+# ⚠️ Diagnostics
 
-This config uses Neovim 0.10's upgraded built-in themes. It defaults to `habamax` for a high-contrast dark mode.
+| Keymap | Action |
+|---|---|
+| `gl` | Show diagnostics popup |
+| `[d` | Previous diagnostic |
+| `]d` | Next diagnostic |
 
-To change this, modify the following line in `init.lua`:
+---
+
+# ✂️ Snippets
+
+| Keymap | Action |
+|---|---|
+| `Tab` | Expand snippet / next placeholder |
+| `Shift+Tab` | Previous placeholder |
+
+---
+
+# 🔥 Completion
+
+| Keymap | Action |
+|---|---|
+| `Ctrl+Space` | Trigger completion |
+| `Enter` | Confirm completion |
+| `Tab` | Next completion item |
+| `Shift+Tab` | Previous completion item |
+
+---
+
+# 🐍 Python Runner
+
+| Keymap | Action |
+|---|---|
+| `<leader>rr` | Run current Python file |
+| `<leader>tf` | Run tests in current file |
+| `<leader>ta` | Run all tests |
+
+---
+
+# 🪟 Window Navigation
+
+| Keymap | Action |
+|---|---|
+| `Ctrl+h` | Left window |
+| `Ctrl+l` | Right window |
+| `Ctrl+j` | Bottom window |
+| `Ctrl+k` | Top window |
+
+---
+
+# 💾 Save / Quit
+
+| Keymap | Action |
+|---|---|
+| `<leader>w` | Save file |
+| `<leader>q` | Quit window |
+
+---
+
+# 🖥️ Terminal
+
+| Keymap | Action |
+|---|---|
+| `Esc` | Exit terminal mode |
+
+---
+
+# 📂 Virtual Environment Detection
+
+The config automatically detects:
+
+## Priority Order
+
+1. Active `VIRTUAL_ENV`
+2. Project `.venv`
+3. Project `venv`
+4. Global `pylsp`
+
+---
+
+# 📁 Recommended Project Structure
+
+```text
+project/
+├── .venv/
+├── src/
+├── tests/
+├── pyproject.toml
+└── README.md
+```
+
+---
+
+# 🧪 Testing Your Setup
+
+## Verify LSP
+
+Inside Neovim:
+
+```vim
+:LspInfo
+```
+
+Expected:
+- `pylsp` attached
+
+---
+
+## Verify Completion
+
+Type:
+
+```python
+from loguru import
+```
+
+Expected:
+- autocomplete suggestions
+
+---
+
+## Verify Formatting
+
+Save a badly formatted file.
+
+Expected:
+- automatic formatting
+
+---
+
+# 🎨 Themes
+
+Default:
 
 ```lua
 vim.cmd("colorscheme habamax")
--- Alternatives: retrobox, sorbet, quiet
 ```
 
+Built-in alternatives:
 
+```lua
+vim.cmd("colorscheme retrobox")
+vim.cmd("colorscheme sorbet")
+vim.cmd("colorscheme quiet")
+```
+
+---
+
+# ⚡ Performance
+
+This config uses:
+
+```lua
+vim.loader.enable()
+```
+
+Benefits:
+- Lua bytecode caching
+- faster startup
+- reduced config load time
+
+---
+
+# 🧼 Philosophy
+
+This config intentionally avoids:
+- plugin managers
+- heavy frameworks
+- unnecessary abstractions
+- startup slowdown
+
+Everything is:
+- native
+- minimal
+- fast
+- maintainable
+- future-proof
+
+---
+
+# ✅ Features Summary
+
+| Feature | Included |
+|---|---|
+| Native LSP | ✅ |
+| Native Completion | ✅ |
+| Native Snippets | ✅ |
+| Auto Formatting | ✅ |
+| Auto Pairs | ✅ |
+| Diagnostics | ✅ |
+| Inlay Hints | ✅ |
+| Semantic Highlighting | ✅ |
+| Python Runner | ✅ |
+| Pytest Integration | ✅ |
+| System Clipboard | ✅ |
+| Cross Platform | ✅ |
+| Plugin Free | ✅ |
+
+---
+
+# 📜 License
+
+MIT
